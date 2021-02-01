@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2017 Maxim Fedotov
+Copyright (c) 2017 Maxim Fedotov & 2021 Ahmed Said .net core port
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

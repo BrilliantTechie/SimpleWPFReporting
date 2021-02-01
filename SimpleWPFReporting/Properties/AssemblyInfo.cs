@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SimpleWPFReporting")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SimpleWPFReporting Port for .NET Core and Latest SharpPdf")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SimpleWPFReporting")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCompany("Terra Techs")]
+[assembly: AssemblyProduct("SimpleWPFReportingNETCore")]
+[assembly: AssemblyCopyright("Copyright © 2019 Terra Techs LLC.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

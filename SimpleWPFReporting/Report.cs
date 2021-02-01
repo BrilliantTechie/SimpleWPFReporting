@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Printing;
 using System.Reflection;
@@ -56,16 +57,24 @@ namespace SimpleWPFReporting
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                System.IO.Packaging.Package package = System.IO.Packaging.Package.Open(memoryStream, FileMode.Create);
+                System.IO.Packaging.Package package = System.IO.Packaging.Package.Open(memoryStream, FileMode.OpenOrCreate);
                 XpsDocument xpsDocument = new XpsDocument(package);
                 XpsDocumentWriter xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(xpsDocument);
 
                 xpsDocumentWriter.Write(visual);
-                xpsDocument.Close();
-                package.Close();
 
-                var pdfXpsDoc = PdfSharp.Xps.XpsModel.XpsDocument.Open(memoryStream);
-                XpsConverter.Convert(pdfXpsDoc, saveFileDialog.FileName, 0);
+
+                xpsDocument.Close();
+                //package.Close();
+
+                var packageUri = new Uri("memorystream://myXps.xps");
+                PackageStore.AddPackage(packageUri, package);
+                XpsDocument doc = new XpsDocument(package, CompressionOption.SuperFast, packageUri.AbsoluteUri);
+                XpsConverter.Convert(doc, saveFileDialog.FileName, 0);
+
+                package.Close();
+                //var pdfXpsDoc = PdfSharp.Xps.XpsModel.XpsDocument.Open(memoryStream);
+                //XpsConverter.Convert(pdfXpsDoc, saveFileDialog.FileName, 0);
             }
         }
 
@@ -345,10 +354,15 @@ namespace SimpleWPFReporting
 
                     xpsDocumentWriter.Write(fixedDocument);
                     xpsDocument.Close();
-                    package.Close();
 
-                    var pdfXpsDoc = PdfSharp.Xps.XpsModel.XpsDocument.Open(memoryStream);
-                    XpsConverter.Convert(pdfXpsDoc, saveFileDialog.FileName, 0);
+                    var packageUri = new Uri("memorystream://myXps.xps");
+                    PackageStore.AddPackage(packageUri, package);
+                    XpsDocument doc = new XpsDocument(package, CompressionOption.SuperFast, packageUri.AbsoluteUri);
+                    XpsConverter.Convert(doc, saveFileDialog.FileName, 0);
+
+                    package.Close();
+                    //var pdfXpsDoc = PdfSharp.Xps.XpsModel.XpsDocument.Open(memoryStream);
+                    //XpsConverter.Convert(pdfXpsDoc, saveFileDialog.FileName, 0);
                 }
             }
             finally

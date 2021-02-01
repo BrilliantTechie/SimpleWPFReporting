@@ -1,15 +1,15 @@
-# SimpleWPFReporting
+# SimpleWPFReporting for .NET Core
 
-Reporting in WPF (XAML) made easy
+Reporting in WPF (XAML) made easy (Ported for .NET Core)
 
 ## How to get it
 
-SimpleWPFReporting package is available on [NuGet](https://www.nuget.org/packages/SimpleWPFReporting/)
+SimpleWPFReporting package is available on [NuGet](https://www.nuget.org/packages/SimpleWPFReportingNETCore/)
 
 You can use Package Manager Console to get it:
 
-~~~powershell
-PM> Install-Package SimpleWPFReporting
+~~~PowerShell
+PM> Install-Package SimpleWPFReportingNETCore 
 ~~~
 
 ## How does it work
