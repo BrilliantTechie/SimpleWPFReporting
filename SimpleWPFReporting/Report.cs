@@ -65,7 +65,6 @@ namespace SimpleWPFReporting
 
 
                 xpsDocument.Close();
-                //package.Close();
 
                 var packageUri = new Uri("memorystream://myXps.xps");
                 PackageStore.AddPackage(packageUri, package);
@@ -170,7 +169,8 @@ namespace SimpleWPFReporting
         /// Optional footer for each page
         /// Note: You can use DynamicResource PageNumber in this template to display page number
         /// </param>
-        /// <param name="footerStartsFromTheSecondPage">Do not use footer on the first page (default is false)</param> 
+        /// <param name="footerStartsFromTheSecondPage">Do not use footer on the first page (default is false)</param>
+        /// <param name="direction">Flow Direction</param> 
         public static void PrintReport(
             StackPanel reportContainer, 
             object dataContext, 
@@ -181,7 +181,8 @@ namespace SimpleWPFReporting
             DataTemplate reportHeaderDataTemplate = null,
             bool headerOnlyOnTheFirstPage = false,
             DataTemplate reportFooterDataTemplate = null,
-            bool footerStartsFromTheSecondPage = false)
+            bool footerStartsFromTheSecondPage = false,
+            FlowDirection direction = FlowDirection.LeftToRight)
         {
             PrintDialog printDialog = new PrintDialog();
 
@@ -205,12 +206,13 @@ namespace SimpleWPFReporting
                     reportHeaderDataTemplate, 
                     headerOnlyOnTheFirstPage, 
                     reportFooterDataTemplate, 
-                    footerStartsFromTheSecondPage);
+                    footerStartsFromTheSecondPage,
+                    direction);
 
             try
             {
                 ReportPages.ForEach(reportPage => reportPage.Scale(reportSize, printDialog));
-                ReportPages.ForEach((reportPage, index) => printDialog.PrintVisual(reportPage.LayoutRoot, $"Карточка Точки {index + 1}"));
+                ReportPages.ForEach((reportPage, index) => printDialog.PrintVisual(reportPage.LayoutRoot, $"Report {index + 1}"));
             }
             finally
             {
@@ -238,7 +240,8 @@ namespace SimpleWPFReporting
         /// Optional footer for each page
         /// Note: You can use DynamicResource PageNumber in this template to display page number
         /// </param>
-        /// <param name="footerStartsFromTheSecondPage">Do not use footer on the first page (default is false)</param> 
+        /// <param name="footerStartsFromTheSecondPage">Do not use footer on the first page (default is false)</param>
+        /// <param name="direction">Flow Direction</param> 
         public static void PrintReport(
             StackPanel reportContainer,
             object dataContext,
@@ -248,7 +251,8 @@ namespace SimpleWPFReporting
             DataTemplate reportHeaderDataTemplate = null,
             bool headerOnlyOnTheFirstPage = false,
             DataTemplate reportFooterDataTemplate = null,
-            bool footerStartsFromTheSecondPage = false)
+            bool footerStartsFromTheSecondPage = false,
+            FlowDirection direction = FlowDirection.LeftToRight)
         {
             PrintReport(
                 reportContainer, 
@@ -260,7 +264,8 @@ namespace SimpleWPFReporting
                 reportHeaderDataTemplate, 
                 headerOnlyOnTheFirstPage, 
                 reportFooterDataTemplate, 
-                footerStartsFromTheSecondPage);
+                footerStartsFromTheSecondPage,
+                direction);
         }
 
         /// <summary>
@@ -281,7 +286,8 @@ namespace SimpleWPFReporting
         /// Optional footer for each page
         /// Note: You can use DynamicResource PageNumber in this template to display page number
         /// </param>
-        /// <param name="footerStartsFromTheSecondPage">Do not use footer on the first page (default is false)</param> 
+        /// <param name="footerStartsFromTheSecondPage">Do not use footer on the first page (default is false)</param>
+        /// <param name="direction">Document Flow Direction</param> 
         public static void ExportReportAsPdf(
             StackPanel reportContainer, 
             object dataContext, 
@@ -292,7 +298,8 @@ namespace SimpleWPFReporting
             DataTemplate reportHeaderDataTemplate = null,
             bool headerOnlyOnTheFirstPage = false,
             DataTemplate reportFooterDataTemplate = null,
-            bool footerStartsFromTheSecondPage = false)
+            bool footerStartsFromTheSecondPage = false,
+            FlowDirection direction = FlowDirection.LeftToRight)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
@@ -323,7 +330,7 @@ namespace SimpleWPFReporting
                     footerStartsFromTheSecondPage);
 
             FixedDocument fixedDocument = new FixedDocument();
-
+            
             try
             {
                 using (MemoryStream memoryStream = new MemoryStream())
@@ -336,6 +343,7 @@ namespace SimpleWPFReporting
                     {
                         reportPage.Width = reportPage.ActualWidth;
                         reportPage.Height = reportPage.ActualHeight;
+                        reportPage.FlowDirection = direction;
 
                         FixedPage newFixedPage = new FixedPage();
                         newFixedPage.Children.Add(reportPage);
@@ -345,8 +353,11 @@ namespace SimpleWPFReporting
                         newFixedPage.Height = newFixedPage.ActualHeight;
                         newFixedPage.Background = backgroundBrush;
                         newFixedPage.UpdateLayout();
+                        newFixedPage.FlowDirection = direction;
 
                         PageContent pageContent = new PageContent();
+                        pageContent.FlowDirection = direction;
+
                         ((IAddChild)pageContent).AddChild(newFixedPage);
 
                         fixedDocument.Pages.Add(pageContent);
@@ -358,6 +369,7 @@ namespace SimpleWPFReporting
                     var packageUri = new Uri("memorystream://myXps.xps");
                     PackageStore.AddPackage(packageUri, package);
                     XpsDocument doc = new XpsDocument(package, CompressionOption.SuperFast, packageUri.AbsoluteUri);
+                    
                     XpsConverter.Convert(doc, saveFileDialog.FileName, 0);
 
                     package.Close();
@@ -426,7 +438,8 @@ namespace SimpleWPFReporting
             DataTemplate reportHeaderDataTemplate,
             bool headerOnlyOnTheFirstPage,
             DataTemplate reportFooterDataTemplate,
-            bool footerStartsFromTheSecondPage)
+            bool footerStartsFromTheSecondPage,
+            FlowDirection direction = FlowDirection.LeftToRight)
         {
             int pageNumber = 1;
 
@@ -446,6 +459,8 @@ namespace SimpleWPFReporting
 
             foreach (FrameworkElement reportVisualElement in ReportElements)
             {
+                reportVisualElement.FlowDirection = direction;
+
                 if (ReportPages.Last().GetChildrenActualHeight() + GetActualHeightPlusMargin(reportVisualElement) > reportSize.Height - margin.Top - margin.Bottom)
                 {
                     pageNumber++;
@@ -467,6 +482,7 @@ namespace SimpleWPFReporting
 
             foreach (ReportPage reportPage in ReportPages)
             {
+                
                 reportPage.LayoutRoot.Measure(reportSize);
                 reportPage.LayoutRoot.Arrange(new Rect(reportSize));
                 reportPage.LayoutRoot.UpdateLayout();

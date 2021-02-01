@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>SimpleWPFReportingNETCore</id>
+    <version>1.0.1</version>
+    <title>SimpleWPFReportingNETCore</title>
+    <authors>Ahmed Said</authors>
+    <owners>Ahmed Said</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/BrilliantTechie/SimpleWPFReportingNETCore</projectUrl>
+    <description>SimpleWPFReporting Port for .NET Core and Latest PdfSharp</description>
+    <releaseNotes>Support Flow Direction</releaseNotes>
+    <copyright>Copyright 2021 Terra Techs</copyright>
+    <tags>Pdf Xps</tags>
+  </metadata>
+</package>

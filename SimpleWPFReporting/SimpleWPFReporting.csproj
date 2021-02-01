@@ -7,8 +7,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SimpleWPFReportingNETCore</PackageId>
     <Authors>Ahmed Said</Authors>
-    <PackageProjectUrl>https://github.com/BrilliantTechie/SimpleWPFReporting</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/BrilliantTechie/SimpleWPFReporting</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/BrilliantTechie/SimpleWPFReportingNETCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/BrilliantTechie/SimpleWPFReportingNETCore</RepositoryUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,4 +33,5 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+
 </Project>

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SimpleWPFReporting")]
-[assembly: AssemblyDescription("SimpleWPFReporting Port for .NET Core and Latest SharpPdf")]
+[assembly: AssemblyDescription("SimpleWPFReporting Port for .NET Core and Latest PdfSharp")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Terra Techs")]
 [assembly: AssemblyProduct("SimpleWPFReportingNETCore")]
-[assembly: AssemblyCopyright("Copyright © 2019 Terra Techs LLC.")]
+[assembly: AssemblyCopyright("Copyright © 2020-2021 Terra Techs LLC.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyInformationalVersion("1.0.1")]
